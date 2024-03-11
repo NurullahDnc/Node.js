@@ -6,9 +6,25 @@ const app = express();
 //uygulamanın calıstıgı port tanımlıyoruz
 const port = 3000;
 
+//ejs template engine,  html dosya uzantilarını .ejs cevirdik render etmek icin
+app.set("view engine", "ejs")
+
+// 'public' klasöründeki dosyaları istemcilere sunmak için
+app.use(express.static('public'))
+
+
 // ana dizine get istegi atıldıgı zaman calısacak, 2 tane parametre alır req ve res 
 app.get("/", (req, res)=>{
-    res.send("merhaba 2")
+    // index sayfasını render ettik
+    res.render("index")
+})
+
+app.get("/about", (req, res)=>{
+     res.render("about")
+})
+
+app.get("/blog", (req, res)=>{
+    res.render("blog")
 })
 
 
@@ -22,11 +38,11 @@ app.listen(port, ()=>{
 
 //////////////////////////
 /*
-req = istek client den yapılan istekler 
-res = geriye donen cevap serverden 
+req(istek) = istek client den yapılan istekler 
+res(cevap) = geriye donen cevap serverden 
 ---
 nodemon paket = sunucuyu otamatik kendi baslatıyor.
-
+ejs paket  = html dosyalarının uzantısını .ejs ceviriyoruz js gibi kulanmak icin, render edecez
 
 
 
