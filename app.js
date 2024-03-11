@@ -1,10 +1,17 @@
 import express from 'express'
+import dotenv from 'dotenv'
+import conn from './db.js'
+
+conn()
+
+//dotenv config metodunu calıstırıyoruz.
+dotenv.config();
 
 //express uygulamasını baslatıyoruz
 const app = express();
 
 //uygulamanın calıstıgı port tanımlıyoruz
-const port = 3000;
+const port = process.env.PORT;
 
 //ejs template engine,  html dosya uzantilarını .ejs cevirdik render etmek icin
 app.set("view engine", "ejs")
@@ -43,7 +50,8 @@ res(cevap) = geriye donen cevap serverden
 ---
 nodemon paket = sunucuyu otamatik kendi baslatıyor.
 ejs paket  = html dosyalarının uzantısını .ejs ceviriyoruz js gibi kulanmak icin, render edecez
-
+dotenv paket = .env dosyasına ulasmamızı saglıyor 
+mongoose paket = modals klasoru altında olsuturdugmz yapıyı  veritabanına gonderiyor 
 
 
 */
