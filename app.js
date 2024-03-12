@@ -1,14 +1,17 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import conn from './db.js'
+import pageRoute from './routes/PageRoute.js'
 
+
+//veritabanı calıstırdık
 conn()
 
 //dotenv config metodunu calıstırıyoruz.
 dotenv.config();
 
 //express uygulamasını baslatıyoruz
-const app = express();
+const app = express(); 
 
 //uygulamanın calıstıgı port tanımlıyoruz
 const port = process.env.PORT;
@@ -21,20 +24,19 @@ app.use(express.static('public'))
 
 
 // ana dizine get istegi atıldıgı zaman calısacak, 2 tane parametre alır req ve res 
-app.get("/", (req, res)=>{
-    // index sayfasını render ettik
-    res.render("index")
-})
+// app.get("/", (req, res)=>{
+//     // index sayfasını render ettik
+//     res.render("index")
+// })
 
-app.get("/about", (req, res)=>{
-     res.render("about")
-})
-
-app.get("/blog", (req, res)=>{
-    res.render("blog")
-})
+// app.get("/about", (req, res)=>{
+//      res.render("about")
+// })
 
 
+//ana dizine get istegi atıldıgında veya url'de gelindiginde, pageRoute func. calıstır. 
+app.use("/", pageRoute )
+ 
 
 // 1. parametre dinlemek istedigimiz port alıyor ve 2. parametre callback func.  , port dinliyor
 app.listen(port, ()=>{
