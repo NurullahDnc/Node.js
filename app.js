@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import conn from './db.js'
 import pageRoute from './routes/PageRoute.js'
+import PhotoRoute from './routes/PhotoRoute.js'
 
 
 //veritabanı calıstırdık
@@ -34,14 +35,19 @@ app.use(express.static('public'))
 // })
 
 
-//ana dizine get istegi atıldıgında veya url'de gelindiginde, pageRoute func. calıstır. 
+//ilgili dizine get istegi atıldıgında veya url'de gelindiginde, ilgili func. calıstır. 
 app.use("/", pageRoute )
+app.use("/photo", PhotoRoute )
+
  
 
 // 1. parametre dinlemek istedigimiz port alıyor ve 2. parametre callback func.  , port dinliyor
 app.listen(port, ()=>{
     console.log(`uygulamanın calıstıgı port :uygulamanın calıstıgı port : ${port}`);
 });
+
+
+
 
 
 
@@ -53,7 +59,8 @@ res(cevap) = geriye donen cevap serverden
 nodemon paket = sunucuyu otamatik kendi baslatıyor.
 ejs paket  = html dosyalarının uzantısını .ejs ceviriyoruz js gibi kulanmak icin, render edecez
 dotenv paket = .env dosyasına ulasmamızı saglıyor 
-mongoose paket = modals klasoru altında olsuturdugmz yapıyı  veritabanına gonderiyor 
+mongoose paket = modals klasoru altında olsuturdugmz yapıyı  veritabanına gonderiyor, db ile bag saglıyor
+Schema  = tabloları olusturuyoruz
 
 
 */
