@@ -11,7 +11,7 @@
             dbName: "youtbenodearin",
             
         }).then(() => {
-            console.log("DB succesully");
+            console.log("Connected to the DB succesully");
         }).catch((err) => {
             console.log(`DB errors: ${err}`);
         })

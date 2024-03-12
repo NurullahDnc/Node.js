@@ -27,6 +27,46 @@ const createPhoto = async (req, res) => {
 const getPhoto = async (req, res) => {
 
     try {
+
+        const photos = await Photo.find({})
+
+        //get istegi bsarılı oldugunda, photos sayfasını render et ve photos'ları gonder
+        res.status(200).render("photos", {
+            photos
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            succeeded: false,
+            error
+        })
+    }
+
+}
+
+
+export {
+    createPhoto,getPhoto
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+//*verileri gonderme db den alıyor
+const getPhoto = async (req, res) => {
+
+    try {
         
         const photos = await Photo.find({})
 
@@ -44,7 +84,4 @@ const getPhoto = async (req, res) => {
 
 }
 
-
-export {
-    createPhoto,getPhoto
-}
+*/
