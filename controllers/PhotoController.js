@@ -5,7 +5,6 @@ const createPhoto = async (req, res) => {
 
     //bekeleme islemi oldugu icin async kulandık
     try {
-
         //veri req'den geliyor, "Photo" modeline gore photo olsuturuyor, olusturulan photo'yu degiskenine atıyor,
         const photo = await Photo.create(req.body);
 
@@ -27,7 +26,6 @@ const createPhoto = async (req, res) => {
 const getPhoto = async (req, res) => {
 
     try {
-
         const photos = await Photo.find({})
 
         //get istegi bsarılı oldugunda, photos sayfasını render et ve photos'ları gonder
@@ -44,9 +42,29 @@ const getPhoto = async (req, res) => {
 
 }
 
+//fotograflar detay
+const getAPhoto = async (req, res) => {
+    try {
+
+        //db'deki _id ile req.params dan gelen id'leri karsılastır
+        const photo = await Photo.findById({ _id : req.params.id})
+        
+        res.status(200).render("photo", {
+            photo
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            succeeded: false,
+            error
+        })
+    }
+
+}
+
 
 export {
-    createPhoto,getPhoto
+    createPhoto,getPhoto, getAPhoto
 }
 
 

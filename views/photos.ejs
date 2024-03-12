@@ -35,9 +35,10 @@
                      <img src="images/g1.jpg" alt="Bridge">
                      <div class="view_main">
                         <div class="pose">
-                           <a class="read_more" href="images/g1.jpg"><img src="images/ga.png" alt="#" /></a>
+                           <a class="read_more" href="/photos/<%= photo._id %>"><img src="images/ga.png"
+                              alt="#" /></a>
                            <h3> <%= photo.name %> </h3>
-                           <p> <%= photo.description %> </p>
+                           <p> <%= photo.description.substring(0, 80)+"..." %> </p>
 
                         </div>
                      </div>
@@ -48,7 +49,7 @@
 
             </div>
             <div class="col-md-12">
-               <a class="plus_btn" href="gallery.html">+</a>
+               <a class="plus_btn" href="photo">+</a>
             </div>
          </div>
       </div>

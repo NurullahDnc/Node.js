@@ -27,6 +27,7 @@ app.use(express.static('public'))
 app.use(express.json());
 
 
+/*
 // ana dizine get istegi atıldıgı zaman calısacak, 2 tane parametre alır req ve res 
 // app.get("/", (req, res)=>{
 //     // index sayfasını render ettik
@@ -36,11 +37,11 @@ app.use(express.json());
 // app.get("/about", (req, res)=>{
 //      res.render("about")
 // })
-
+*/
 
 //ilgili dizine get istegi atıldıgında veya url'de gelindiginde, ilgili func. calıstır. 
 app.use("/", pageRoute )
-app.use("/photo", PhotoRoute )
+app.use("/photos", PhotoRoute )
 
  
 

@@ -1,14 +1,18 @@
 import express from 'express'
 import * as PhotoController from '../controllers/PhotoController.js'
 
-const route = express.Router();
+const router = express.Router();
 
-//buraya post islemi oldugu zaman, createPhoto calıstır, ve "/"" olmasının sebebi app.js de tanımlıyouz yolunu
-route.route("/").post(PhotoController.createPhoto)
-route.route("/").get(PhotoController.getPhoto)
+//buraya post islemi oldugu zaman, ilgili func. calıstır, ve "/"" olmasının sebebi app.js de tanımlıyouz yolunu
+router.route("/")
+    .post(PhotoController.createPhoto)
+    .get(PhotoController.getPhoto)
+
+    router.route('/:id').get(PhotoController.getAPhoto);
 
 
-export default route;
+
+export default router;
 
 
 
@@ -16,7 +20,7 @@ export default route;
 
 /*
 
-route url: "/" yerine, "/test" olsaydı = istek atılan yer bura olurdu "/photos/test"  
+route url: "/" yerine, "/test" olsaydı = istek atılan yer bura olurdu "/photos/test"  ve yukarıdaki gibi tanımlaama yapılıyor "/" tekrar dan yazmaya gerek yok
 
 
 */
