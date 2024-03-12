@@ -1,17 +1,50 @@
 import Photo from "../models/PhotoModel.js";
 
 //fotograf olusturucaz
-const createPhoto =(req, res)=>{
+const createPhoto = async (req, res) => {
 
-    //veri req'den geliyor, "Photo" modeline gore photo olsuturuyor, olusturulan photo'yu degiskenine atıyor,
-    const photo = Photo.create(req.body);
+    //bekeleme islemi oldugu icin async kulandık
+    try {
 
-    //geriye yanıt donduruyoruz status kodu: 201, json formatında veriyi donderdik ve basarılı
-    res.status(201).json({
-        succeeded: true,
-        photo
-    })
+        //veri req'den geliyor, "Photo" modeline gore photo olsuturuyor, olusturulan photo'yu degiskenine atıyor,
+        const photo = await Photo.create(req.body);
+
+        //geriye yanıt donduruyoruz status kodu: 201, json formatında veriyi donderdik ve basarılı
+        res.status(201).json({
+            succeeded: true,
+            photo
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            succeeded: false,
+            error
+        })
+    }
+}
+
+//veritabanından photoları tamamını alıyor 
+const getPhoto = async (req, res) => {
+
+    try {
+        
+        const photos = await Photo.find({})
+
+        res.status(200).json({
+            succeeded: true,
+            photos
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            succeeded: false,
+            error
+        })
+    }
+
 }
 
 
-export {createPhoto}
+export {
+    createPhoto,getPhoto
+}

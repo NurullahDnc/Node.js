@@ -23,6 +23,9 @@ app.set("view engine", "ejs")
 // 'public' klasöründeki dosyaları istemcilere sunmak için
 app.use(express.static('public'))
 
+//body'de gonderdigimiz json formatında verileri okunması icin, eklemezsek undefined doner
+app.use(express.json());
+
 
 // ana dizine get istegi atıldıgı zaman calısacak, 2 tane parametre alır req ve res 
 // app.get("/", (req, res)=>{
