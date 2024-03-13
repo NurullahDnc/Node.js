@@ -2,7 +2,7 @@
 //hangi func. cagırıldıgında o sayfayı geriye render ediyor.
 
 const getIndexPage =(req, res)=>{
-    res.render("index")
+    res.render("index", { user: req.user })
 }
 
 const getAboutPage =(req, res)=>{
@@ -12,18 +12,24 @@ const getAboutPage =(req, res)=>{
 
 const getRegisterPage =(req, res)=>{
 
-    res.render("register")
+    //suer biz gonderiyoruz
+    res.render("register" , { user: req.user })
 }
 
 const getLoginPage =(req, res)=>{
 
-    res.render("login")
+    res.render("login" , { user: req.user })
 }
 
-const getLogout =(req, res)=>{
+const getLogout = (req, res) => {
 
-    res.render("logout")
-}
+    //remove olmadıgı icin boyle yontem kulanıldı
+    res.cookie('jwt', '', {
+      maxAge: 1,
+    });
+    //cıkıs sonrası yoneldir
+    res.redirect('/');
+  };
 
 const getContactPage =(req, res)=>{
 

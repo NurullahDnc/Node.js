@@ -9,10 +9,7 @@ const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body);
 
-        res.status(201).json({
-            succeeded: true,
-            user
-        })
+        res.redirect("/login")
 
     } catch (error) {
         res.status(500).json({
@@ -86,7 +83,9 @@ const createToken =(userId)=>{
 
 const getDashboardPage =(req, res)=>{
 
-    res.render("dashboard")
+    //user bilgisini gonderiyoruz
+    res.render("dashboard", { user: req.user })
+  
 }
 
 

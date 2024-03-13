@@ -5,7 +5,7 @@ import cookieparser from 'cookie-parser'
 import pageRoute from './routes/PageRoute.js'
 import PhotoRoute from './routes/PhotoRoute.js'
 import UserRoute from './routes/UserRoute.js'
-
+import { checkUser } from './midllewares/AuthMidllewares.js'
 
 
 //veritabanı calıstırdık
@@ -53,6 +53,9 @@ app.use(cookieparser());
 app.use("/", pageRoute )
 app.use("/photos", PhotoRoute )
 app.use("/users", UserRoute )
+
+//get olan tum sayfalarda, kayıtlı kulanıcı kontrol et
+app.get("*", checkUser,)
 
 
  
