@@ -11,4 +11,32 @@ const getAboutPage =(req, res)=>{
     res.render("about")
 }
 
-export {getIndexPage, getAboutPage};
+const getRegisterPage =(req, res)=>{
+
+    res.render("register")
+}
+
+const getLoginPage =(req, res)=>{
+
+    res.render("login")
+}
+
+const getLogout =(req, res)=>{
+
+    res.render("logout")
+}
+
+const getContactPage =(req, res)=>{
+
+    res.render("contact")
+}
+
+const sendMail =(req, res)=>{
+
+    res.render("contact")
+}
+
+
+
+
+export {getIndexPage, getAboutPage, getRegisterPage, getLoginPage, getLogout, getContactPage, sendMail};

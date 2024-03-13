@@ -46,7 +46,7 @@ const getPhoto = async (req, res) => {
 const getAPhoto = async (req, res) => {
     try {
 
-        //db'deki _id ile req.params dan gelen id'leri karsılastır
+        //db'deki _id ile urlden gelen req.params id'leri karsılastır
         const photo = await Photo.findById({ _id : req.params.id})
         
         res.status(200).render("photo", {

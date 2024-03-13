@@ -8,6 +8,7 @@ router.route("/")
     .post(PhotoController.createPhoto)
     .get(PhotoController.getPhoto)
 
+    
     router.route('/:id').get(PhotoController.getAPhoto);
 
 

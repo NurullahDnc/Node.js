@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import conn from './db.js'
 import pageRoute from './routes/PageRoute.js'
 import PhotoRoute from './routes/PhotoRoute.js'
+import UserRoute from './routes/UserRoute.js'
+
 
 
 //veritabanı calıstırdık
@@ -26,6 +28,10 @@ app.use(express.static('public'))
 //body'de gonderdigimiz json formatında verileri okunması icin, eklemezsek undefined doner
 app.use(express.json());
 
+//form body icerisindeki verileri parse ediyor, parametre alıyor
+app.use(express.urlencoded({extended: true}));
+
+
 
 /*
 // ana dizine get istegi atıldıgı zaman calısacak, 2 tane parametre alır req ve res 
@@ -42,6 +48,8 @@ app.use(express.json());
 //ilgili dizine get istegi atıldıgında veya url'de gelindiginde, ilgili func. calıstır. 
 app.use("/", pageRoute )
 app.use("/photos", PhotoRoute )
+app.use("/users", UserRoute )
+
 
  
 
@@ -63,7 +71,7 @@ res(cevap) = geriye donen cevap serverden
 nodemon paket = sunucuyu otamatik kendi baslatıyor.
 ejs paket  = html dosyalarının uzantısını .ejs ceviriyoruz js gibi kulanmak icin, render edecez
 dotenv paket = .env dosyasına ulasmamızı saglıyor 
-mongoose paket = modals klasoru altında olsuturdugmz yapıyı  veritabanına gonderiyor, db ile bag saglıyor
+mongoose paket = modals klasoru altında olsuturdugmz yapıyı, veritabanına gonderiyor, db ile bag saglıyor
 Schema  = tabloları olusturuyoruz
 
 
