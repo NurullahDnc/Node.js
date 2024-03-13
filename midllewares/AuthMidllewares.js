@@ -6,22 +6,27 @@ import jwt from 'jsonwebtoken';
 const authenticateToken = async (req, res, next) => {
 
     try {
-        // İstek başlığından token alınır
-        const token = req.headers["authorization"] && req.headers["authorization"].split(" ")[1];
 
-        // Eğer token yoksa
-        if (!token) {
-            return res.status(401).json({
-                succeeded: false,
-                Error: "no token available"
-            });
+        //cookies'den token alıyoruz.
+        const token = req.cookies.jwt;
+
+        if (token) {
+            jwt.verify(token, process.env.JWT_SECRET, (err) => {
+
+                //token verify isleminde hata varsa 
+                if (err) {
+                    console.log(err.message);
+                    res.redirect("/login")
+                } else {
+
+                    // Sonraki adıma geç
+                    next();
+                }
+            })
+        } else {
+            res.redirect("/login")
         }
 
-        // token icerisinden userId buluyor, token ve secretKey alıyor, lazım olan userId
-        req.user = await User.findById(jwt.verify(token, process.env.JWT_SECRET).userId);
-
-        // Sonraki adıma geç
-        next();
     } catch (error) {
         // Token doğrulama başarısız olursa veya kullanıcı bulunamazsa hata döndür
         return res.status(401).json({

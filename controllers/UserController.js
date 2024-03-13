@@ -47,11 +47,17 @@ const loginUser = async (req, res) => {
 
         //same dogru ise yani sifre dogru 200 kodu dondur  /  sifre hatalı ise 401 kodunu dondur
         if (same) {
-            res.status(200).json({
-                //giris basarılı oldugunda user ve token donderiyoruz, userId func. gonderiyoruz token olsuturyoruz
-                user,
-                token: createToken(user._id)
-            })
+
+            //func. userId gonderiyor token olsutuyoruz, token cookie kayıt ediyor
+            const token = createToken(user._id);
+            res.cookie('jwt', token, {
+                httpOnly: true,
+                maxAge: 1000* 60* 60* 24,
+            }  )
+
+            //giris sonrası yonelendirme yap
+            res.redirect("/users/dashboard")
+
         } else {
             res.status(401).json({
                 succeded: false,
@@ -78,10 +84,24 @@ const createToken =(userId)=>{
 }
 
 
+const getDashboardPage =(req, res)=>{
+
+    res.render("dashboard")
+}
 
 
 
-export { createUser, loginUser }
+
+
+
+export { createUser, loginUser, getDashboardPage }
+
+
+
+
+
+
+
 
 
 /*

@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import conn from './db.js'
+import cookieparser from 'cookie-parser'
 import pageRoute from './routes/PageRoute.js'
 import PhotoRoute from './routes/PhotoRoute.js'
 import UserRoute from './routes/UserRoute.js'
@@ -30,6 +31,9 @@ app.use(express.json());
 
 //form body icerisindeki verileri parse ediyor, parametre alıyor
 app.use(express.urlencoded({extended: true}));
+
+//func. olarak calıstırıyoruz.
+app.use(cookieparser());
 
 
 
@@ -74,6 +78,7 @@ dotenv paket = .env dosyasına ulasmamızı saglıyor
 mongoose paket = modals klasoru altında olsuturdugmz yapıyı, veritabanına gonderiyor, db ile bag saglıyor
 Schema  = tabloları olusturuyoruz
 jsonwebtoken = token
+cocike = 
 
 */
 
