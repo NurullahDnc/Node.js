@@ -1,5 +1,6 @@
 import User from "../models/UserModal.js";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'
 
 
 //user olusturma
@@ -46,7 +47,11 @@ const loginUser = async (req, res) => {
 
         //same dogru ise yani sifre dogru 200 kodu dondur  /  sifre hatalı ise 401 kodunu dondur
         if (same) {
-            res.status(200).send('You are loggend in');
+            res.status(200).json({
+                //giris basarılı oldugunda user ve token donderiyoruz, userId func. gonderiyoruz token olsuturyoruz
+                user,
+                token: createToken(user._id)
+            })
         } else {
             res.status(401).json({
                 succeded: false,
@@ -63,11 +68,20 @@ const loginUser = async (req, res) => {
 };
 
 
+//login oldugunda token olusturuyor
+const createToken =(userId)=>{
 
-export {
-    createUser,
-    loginUser
+    //sign metodunu cagırıyoruz, 1. parametre userId, 2.paramtre imzalanması icin gizli anahtar, 3. parametre ise gecerlilik suresi 
+    return jwt.sign({userId}, process.env.JWT_SECRET, {
+        expiresIn: "1d"
+    })
 }
+
+
+
+
+
+export { createUser, loginUser }
 
 
 /*

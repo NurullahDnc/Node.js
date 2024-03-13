@@ -73,7 +73,7 @@ ejs paket  = html dosyalarının uzantısını .ejs ceviriyoruz js gibi kulanmak
 dotenv paket = .env dosyasına ulasmamızı saglıyor 
 mongoose paket = modals klasoru altında olsuturdugmz yapıyı, veritabanına gonderiyor, db ile bag saglıyor
 Schema  = tabloları olusturuyoruz
-
+jsonwebtoken = token
 
 */
 

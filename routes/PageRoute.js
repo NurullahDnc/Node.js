@@ -1,12 +1,15 @@
 //*sayfa routerları
 import express from 'express'
 import * as PageController from '../controllers/PageController.js'
+import * as AuthMidllewares from '../midllewares/AuthMidllewares.js'
+
 
 //express router ozeligini kulanıyoruz, router yapmak icin
 const router = express.Router();
 
 //route degiskenine route oldugunda ,yani "/" dizinlerine get istegi oldugunda, /getIndexPage func. calıstır
-router.route('/').get(PageController.getIndexPage);
+
+router.route('/').get(AuthMidllewares.authenticateToken, PageController.getIndexPage);
 router.route('/about').get(PageController.getAboutPage);
 router.route('/register').get(PageController.getRegisterPage);
 router.route('/login').get(PageController.getLoginPage);
