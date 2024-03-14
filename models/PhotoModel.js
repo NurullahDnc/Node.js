@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-
 //"Schema" ile db tablo yapısını kuruyoruz
 const {Schema } = mongoose;
 

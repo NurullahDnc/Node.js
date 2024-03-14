@@ -8,14 +8,29 @@ const createUser = async (req, res) => {
 
     try {
         const user = await User.create(req.body);
-
-        res.redirect("/login")
+        res.status(201).json({ user: user._id });
 
     } catch (error) {
-        res.status(500).json({
-            succeeded: false,
-            error
-        })
+
+        let errors2 = {}
+        console.log("err", error);
+
+        //e posta kontol ediyor varmı, 11000 hata koduna esit, error2'nin email'ne hata ata
+        if (error.code === 11000) {
+            errors2.email = 'The Email is already registered';
+        }
+
+        if (error.name === "ValidationError") {
+
+            // Hatanın içindeki her bir hata ögesi için işlem yap
+            Object.keys(error.errors).forEach((key) => {
+
+                //her hatayı key'ine gore errors2 icerisine at
+                errors2[key] = error.errors[key].message
+            })
+        }
+        console.log('ERRORS2:::', errors2);
+        res.status(400).json(errors2)
     }
 }
 
@@ -26,7 +41,9 @@ const loginUser = async (req, res) => {
         console.log('req.body', req.body);
 
         //kulanıcı varmı kontrolunu yapıyor,  findOne metodu'da sadece username yazmak yeterli karsılastırma yapıyor
-        const user = await User.findOne({ username });
+        const user = await User.findOne({
+            username
+        });
 
         //sifre kontrolu icin 
         let same = false;
@@ -34,7 +51,7 @@ const loginUser = async (req, res) => {
         //user varsa, compare metodu ile sifreleri karsılastır, same degiskenine ata true-false / user yoksa 401 kodu don
         if (user) {
             same = await bcrypt.compare(password, user.password);
-         } else {
+        } else {
             //kulanıcı yoksa hatayı return et kodu sonlandır.
             return res.status(401).json({
                 succeded: false,
@@ -49,8 +66,8 @@ const loginUser = async (req, res) => {
             const token = createToken(user._id);
             res.cookie('jwt', token, {
                 httpOnly: true,
-                maxAge: 1000* 60* 60* 24,
-            }  )
+                maxAge: 1000 * 60 * 60 * 24,
+            })
 
             //giris sonrası yonelendirme yap
             res.redirect("/users/dashboard")
@@ -72,20 +89,24 @@ const loginUser = async (req, res) => {
 
 
 //login oldugunda token olusturuyor
-const createToken =(userId)=>{
+const createToken = (userId) => {
 
     //sign metodunu cagırıyoruz, 1. parametre userId, 2.paramtre imzalanması icin gizli anahtar, 3. parametre ise gecerlilik suresi 
-    return jwt.sign({userId}, process.env.JWT_SECRET, {
+    return jwt.sign({
+        userId
+    }, process.env.JWT_SECRET, {
         expiresIn: "1d"
     })
 }
 
 
-const getDashboardPage =(req, res)=>{
+const getDashboardPage = (req, res) => {
 
     //user bilgisini gonderiyoruz
-    res.render("dashboard", { user: req.user })
-  
+    res.render("dashboard", {
+        user: req.user
+    })
+
 }
 
 
@@ -93,7 +114,11 @@ const getDashboardPage =(req, res)=>{
 
 
 
-export { createUser, loginUser, getDashboardPage }
+export {
+    createUser,
+    loginUser,
+    getDashboardPage
+}
 
 
 

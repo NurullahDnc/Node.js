@@ -1,25 +1,18 @@
 
 //hangi func. cagırıldıgında o sayfayı geriye render ediyor.
 
-const getIndexPage =(req, res)=>{
-    res.render("index", { user: req.user })
-}
 
-const getAboutPage =(req, res)=>{
+const getIndexPage =(req, res)=>{ res.render("index", { user: req.user }) }
 
-    res.render("about")
-}
+const getAboutPage =(req, res)=>{ res.render("about") }
 
-const getRegisterPage =(req, res)=>{
 
-    //suer biz gonderiyoruz
-    res.render("register" , { user: req.user })
-}
+    //uzer biz gonderiyoruz
+const getRegisterPage =(req, res)=>{ res.render("register" , { user: req.user }) }
 
-const getLoginPage =(req, res)=>{
 
-    res.render("login" , { user: req.user })
-}
+const getLoginPage =(req, res)=>{ res.render("login" , { user: req.user }) }
+
 
 const getLogout = (req, res) => {
 
@@ -31,15 +24,10 @@ const getLogout = (req, res) => {
     res.redirect('/');
   };
 
-const getContactPage =(req, res)=>{
 
-    res.render("contact")
-}
+const getContactPage =(req, res)=>{ res.render("contact")  }
 
-const sendMail =(req, res)=>{
-
-    res.render("contact")
-}
+const sendMail =(req, res)=>{ res.render("contact") }
 
 
 

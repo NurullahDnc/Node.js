@@ -26,7 +26,7 @@ const createPhoto = async (req, res) => {
 const getPhoto = async (req, res) => {
 
     try {
-        const photos = await Photo.find({})
+        const photos = await Photo.find({}) 
 
         //get istegi bsarılı oldugunda, photos sayfasını render et ve photos'ları gonder
         res.status(200).render("photos", {

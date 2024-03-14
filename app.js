@@ -9,8 +9,8 @@ import { checkUser } from './midllewares/AuthMidllewares.js'
 
 
 //veritabanı calıstırdık
-conn()
-
+conn() 
+ 
 //dotenv config metodunu calıstırıyoruz.
 dotenv.config();
 
@@ -21,7 +21,7 @@ const app = express();
 const port = process.env.PORT;
 
 //ejs template engine,  html dosya uzantilarını .ejs cevirdik render etmek icin
-app.set("view engine", "ejs")
+app.set("view engine", "ejs") 
 
 // 'public' klasöründeki dosyaları istemcilere sunmak için
 app.use(express.static('public'))
@@ -33,21 +33,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 //func. olarak calıstırıyoruz.
-app.use(cookieparser());
+app.use(cookieparser()); 
 
 
 
-/*
-// ana dizine get istegi atıldıgı zaman calısacak, 2 tane parametre alır req ve res 
-// app.get("/", (req, res)=>{
-//     // index sayfasını render ettik
-//     res.render("index")
-// })
-
-// app.get("/about", (req, res)=>{
-//      res.render("about")
-// })
-*/
 
 //ilgili dizine get istegi atıldıgında veya url'de gelindiginde, ilgili func. calıstır. 
 app.use("/", pageRoute )
@@ -64,6 +53,11 @@ app.get("*", checkUser,)
 app.listen(port, ()=>{
     console.log(`uygulamanın calıstıgı port :uygulamanın calıstıgı port : ${port}`);
 });
+
+
+
+
+
 
 
 

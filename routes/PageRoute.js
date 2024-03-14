@@ -17,6 +17,7 @@ router.route('/logout').get(PageController.getLogout);
 router.route('/contact').get(PageController.getContactPage);
 // router.route('/contact').post(PageController.sendMail);
 
+
 export default router;
 
 
