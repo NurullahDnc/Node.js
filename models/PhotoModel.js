@@ -19,6 +19,17 @@ const photoSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    user:{
+        //objectId alıyor
+        type: Schema.Types.ObjectId,
+
+        //userda olsututdugumuz model ile eslesmesi gerek
+        ref: "user",
+    },
+    url:{
+        type: String,
+        require: true
+    }
 });
 
 //model olusturuyoruz, 1. parametre model adı, 2. parametre schema adını veriyoruz

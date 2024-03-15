@@ -2,9 +2,11 @@
 //hangi func. cagırıldıgında o sayfayı geriye render ediyor.
 
 
+//{ user: req.user }  = manuel userları gonderdim
+
 const getIndexPage =(req, res)=>{ res.render("index", { user: req.user }) }
 
-const getAboutPage =(req, res)=>{ res.render("about") }
+const getAboutPage =(req, res)=>{ res.render("about", { user: req.user }) }
 
 
     //uzer biz gonderiyoruz

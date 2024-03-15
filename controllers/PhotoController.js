@@ -1,32 +1,52 @@
 import Photo from "../models/PhotoModel.js";
+import {
+    v2 as cloudinary
+} from "cloudinary"
+import fs from "fs"
+
+//fs = resim yukledikten sonra tmp klasorunden kaladıryoruz, node.js icinde bulunuyor paket
 
 //fotograf olusturucaz
 const createPhoto = async (req, res) => {
 
-    //bekeleme islemi oldugu icin async kulandık
     try {
-        //veri req'den geliyor, "Photo" modeline gore photo olsuturuyor, olusturulan photo'yu degiskenine atıyor,
-        const photo = await Photo.create(req.body);
+        //cloudinary'e gorsel yukleme islemi / files.image = imput'un name="image" olacak / encetype de ekle input'a
+        const result = await cloudinary.uploader.upload(
+            req.files.image.tempFilePath, {
+                use_filename: true,
+                 folder: 'lenslight_youtbe',
+            }
+        );
 
-        //geriye yanıt donduruyoruz status kodu: 201, json formatında veriyi donderdik ve basarılı
-        res.status(201).json({
-            succeeded: true,
-            photo
-        })
+ 
+        // Fotoğraf oluşturma
+        await Photo.create({
+            name: req.body.name,
+            description: req.body.description,
+            user: res.locals.user._id, // Kullanıcı id'sini res.user içinden al
+            url: result.secure_url // Yüklenen fotoğrafın url'si gonderiyoruz,  bu url uzerinde de map ile don
+        });
+
+        //yukleme sonrası temp dosyasından img kaldır.
+        fs.unlinkSync(req.files.image.tempFilePath)
+
+        // 201 gonder, yönlendir
+        res.status(201).redirect("/users/dashboard");
 
     } catch (error) {
+ 
         res.status(500).json({
             succeeded: false,
-            error
-        })
+            error: error.message
+        });
     }
-}
+};
 
 //veritabanından photoları tamamını alıyor 
 const getPhoto = async (req, res) => {
 
     try {
-        const photos = await Photo.find({}) 
+        const photos = await Photo.find({})
 
         //get istegi bsarılı oldugunda, photos sayfasını render et ve photos'ları gonder
         res.status(200).render("photos", {
@@ -46,9 +66,11 @@ const getPhoto = async (req, res) => {
 const getAPhoto = async (req, res) => {
     try {
 
-        //db'deki _id ile urlden gelen req.params id'leri karsılastır
-        const photo = await Photo.findById({ _id : req.params.id})
-        
+        //db'deki _id ile urlden gelen req.params id'leri karsılastır,    /user populate ediyor resimi yukeyen kulanıcııyı alama?
+        const photo = await Photo.findById({
+            _id: req.params.id
+        }).populate("user")  
+
         res.status(200).render("photo", {
             photo
         })
@@ -64,7 +86,9 @@ const getAPhoto = async (req, res) => {
 
 
 export {
-    createPhoto,getPhoto, getAPhoto
+    createPhoto,
+    getPhoto,
+    getAPhoto
 }
 
 

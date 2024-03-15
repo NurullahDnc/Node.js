@@ -1,11 +1,13 @@
 import express from 'express'
+import { checkUser } from '../midllewares/AuthMidllewares.js';
+
 import * as PhotoController from '../controllers/PhotoController.js'
 
 const router = express.Router();
 
-//buraya post islemi oldugu zaman, ilgili func. calıstır, ve "/"" olmasının sebebi app.js de tanımlıyouz yolunu
+//buraya post islemi oldugu zaman, ilgili func. calıstır, ve "/"" olmasının sebebi app.js de tanımlıyouz yolunu , checkUser  = maunel gonderdim
 router.route("/")
-    .post(PhotoController.createPhoto)
+    .post(checkUser, PhotoController.createPhoto)
     .get(PhotoController.getPhoto)
 
     

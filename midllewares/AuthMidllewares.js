@@ -14,9 +14,14 @@ const checkUser = async (req, res, next) => {
                 res.locals.user = null;
                 next();
             } else {
+
+ 
+
                 //token'dan decodedToken icinden userId alıyor
                 const user = await User.findById(decodedToken.userId);
                 res.locals.user = user;
+
+         
                 next();
             }
         });

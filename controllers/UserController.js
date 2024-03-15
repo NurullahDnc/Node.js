@@ -1,6 +1,7 @@
 import User from "../models/UserModal.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
+import Photo from "../models/PhotoModel.js";
 
 
 //user olusturma
@@ -100,11 +101,15 @@ const createToken = (userId) => {
 }
 
 
-const getDashboardPage = (req, res) => {
+const getDashboardPage = async (req, res) => {
+
+    //user = giris yapam user esit olan fotoları gonder
+    const photos= await Photo.find({user: req.user._id})
 
     //user bilgisini gonderiyoruz
     res.render("dashboard", {
-        user: req.user
+        user: req.user,
+        photos
     })
 
 }
